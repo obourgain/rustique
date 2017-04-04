@@ -63,6 +63,3 @@ Conclusion
 ownership & borrowing
 protège de bcp d'erreurs à la compilation
 bas et haut niveau
-
-TODO
-allow unused_imports
