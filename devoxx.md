@@ -9,7 +9,7 @@ text: cargo new déclaration d'une fonction, création du main, cargo run, print
 code:
 ```bash
 cargo new devoxx --bin
-cd cargo
+cd devoxx
 cargo run
 ```
 
@@ -29,9 +29,9 @@ mot clé let et inférence de type
 code:
 ```rust
 fn main() {
- let olivier_age = 42;
- println!("mon age c'est {}", olivier_age);
- olivier_age = 29;
+ let age = 42;
+ println!("mon age c'est {}", age);
+ age = 29;
  //error
  //let mut and it's works
 }
@@ -43,9 +43,9 @@ text: concept fondamental, ownership, pourquoi, pour permettre au compilo de fai
 code:
 ```rust
 fn main() {
-   let devoxx_release_date = vec!(2016, 2017, 42);
-   print_release_date(devoxx_release_date);
-   println!("Devoxx appears in {:?}", devoxx_release_date)
+   let devoxx_editions = vec!(2016, 2017);
+   print_release_date(devoxx_editions);
+   println!("Devoxx appears in {:?}", devoxx_editions); // ajouter ce print après 
 }
 fn print_release_date(date: Vec<i32>) {
    println!("Devoxx appears in {:?}", date)
@@ -75,8 +75,10 @@ text: c'est la manière de structurer des champs (comme des classes en java, mai
 code:
 ```rust
 fn main() {
-   let foo = Foo::new(42);
-   let bar = Bar { foos: vec!(foo) };
+   let mut foo = Foo::new(42);
+   let bar = Bar { foo: foo };
+   foo.get_value();
+   foo.set_value(32);
 }
 
 struct Foo {
@@ -84,13 +86,21 @@ struct Foo {
 }
 
 impl Foo {
-    fn new(value: i32) -> Foo {
+    fn new(value: i32) -> Foo { // syntaxe avec return
         Foo{value: value}
+    }
+    
+    fn get_value(&self) -> i32 {
+        self.value
+    }
+    
+    fn set_value(&mut self, value: i32) {
+        self.value = value;
     }
 }
 
 struct Bar {
-foos: Vec<Foo>,
+    foo: Foo,
 }
 ```
 ---------------------------------
@@ -104,7 +114,7 @@ code:
 use std::fmt::*;
 impl Debug for Foo {
     fn fmt(&self, f: &mut Formatter) -> Result {
-        write!(f, "Foo { val: {} }", self.value)
+        write!(f, "Foo {{ val: {} }}", self.value)
     }
 }
 ```
@@ -117,7 +127,8 @@ puis
 ---------------------------------
 concept: lifetime
 speaker: jbp
-text: ça donne des informations au compilo pour savoir quand libérer la mémoire
+text: ça donne des informations (contraintes) au compilo pour savoir quand libérer la mémoire, déclaré comme un type générique,
+le nom est arbitraire, il faut une apostrophe
 code:
 ```rust
 fn main() {
