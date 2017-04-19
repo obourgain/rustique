@@ -229,6 +229,17 @@ fn main() {
 }
 ```
 
+---------------------------------
+concept: String
+speaker: olivier
+text: Rust a 2 types de strings, la première est String, une chaine de caractère, mais comme on a le ownership en Rust, on peut garantir qu'on est le seul à avoir une ref dessus, et donc c'est mutable si le binding ou le borrow est mut.
+Si on borrow une String, on a un &String, qui est immutable. Mais toujours grace au borrow checker, on peut savoir à la compilation s'il y a des borrows ou pas, donc on peut optimiser.
+Le 2eme type de string est str, ou plutôt &str, la string slice, qui représente une vue sur une String immutable.
+code: 
+```rust
+```
+
+
 Conclusion
 ===
 
